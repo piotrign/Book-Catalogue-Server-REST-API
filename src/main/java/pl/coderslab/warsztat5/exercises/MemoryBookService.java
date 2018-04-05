@@ -28,17 +28,45 @@ public class MemoryBookService {
 		this.list = list;
 	}
 
-	public int selectBook(List<Book> list, int id) {
-		
-		int foundId = 0;
-		
-		for(int i = 0; i < list.size(); i++) {
-			if(list.get(i).getId() == id) {
-				return foundId = i;
-			}else {
-				System.out.println("Id: " + id + " does not exist in the list");
+	public Book selectBook(long id) {
+		for (Book book : list) {
+			if (book.getId() == id) {
+				return book;
 			}
 		}
-		return foundId;
+		System.out.println("Id: " + id + " does not exist in the list");
+		return null;
+	}
+
+	public boolean addBook(Book book) {
+		for (Book bookIterator : list) {
+			if (bookIterator.getId() == book.getId()) {
+				System.out.println("Given id already exists.");
+				return false;
+			}
+		}
+		list.add(book);
+		return true;
+	}
+	
+	public boolean updateBook(long id, String isbn, String title, String author, String publisher, String type) {
+		Book updatedBook = this.selectBook(id);
+		updatedBook.setIsbn(isbn);
+		updatedBook.setTitle(title);
+		updatedBook.setAuthor(author);
+		updatedBook.setPublisher(publisher);
+		updatedBook.setType(type);
+		return true;
+	}
+	
+	public boolean deleteBook(Book book) {
+		for (Book bookIterator : list) {
+			if (bookIterator.getId() == book.getId()) {
+				list.remove(book);
+				return false;
+			}
+		}
+		System.out.println("No id found.");
+		return true;
 	}
 }
