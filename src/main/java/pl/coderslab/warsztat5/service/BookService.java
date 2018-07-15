@@ -1,9 +1,11 @@
-package pl.coderslab.warsztat5.exercises;
+package pl.coderslab.warsztat5.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
+import pl.coderslab.warsztat5.entity.Book;
 
 @Repository
 @Service

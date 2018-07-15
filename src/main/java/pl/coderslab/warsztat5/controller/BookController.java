@@ -1,4 +1,4 @@
-package pl.coderslab.warsztat5.exercises;
+package pl.coderslab.warsztat5.controller;
 
 import java.util.List;
 
@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.coderslab.warsztat5.entity.Book;
+import pl.coderslab.warsztat5.service.BookService;
+
 @EnableAutoConfiguration
 @RestController
 @RequestMapping("/abc")
 public class BookController {
 
-//	@Autowired
+	@Autowired
 	private BookService memoryBookService;
 
 	@RequestMapping("/hello")

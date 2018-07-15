@@ -1,4 +1,4 @@
-package pl.coderslab.warsztat5.exercises;
+package pl.coderslab.warsztat5.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import pl.coderslab.warsztat5.entity.Book;
 
 @Component
 public class MemoryBookService implements BookService{

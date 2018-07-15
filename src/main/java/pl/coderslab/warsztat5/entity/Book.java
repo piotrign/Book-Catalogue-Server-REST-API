@@ -1,4 +1,4 @@
-package pl.coderslab.warsztat5.exercises;
+package pl.coderslab.warsztat5.entity;
 
 public class Book {
 	private long id;
