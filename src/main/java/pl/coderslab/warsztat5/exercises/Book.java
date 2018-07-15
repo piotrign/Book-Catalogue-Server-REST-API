@@ -1,8 +1,7 @@
 package pl.coderslab.warsztat5.exercises;
 
 public class Book {
-	private MemoryBookService memoryBookService;
-	private long id = memoryBookService.getList().size() + 1;
+	private long id;
 	private String isbn;
 	private String title;
 	private String author;
