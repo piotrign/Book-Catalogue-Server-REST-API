@@ -19,7 +19,7 @@ import pl.coderslab.warsztat5.service.BookService;
 
 @EnableAutoConfiguration
 @RestController
-@RequestMapping("/abc")
+@RequestMapping("/books")
 public class BookController {
 
 	@Autowired
@@ -32,27 +32,25 @@ public class BookController {
 
 	@RequestMapping("/hellobook")
 	public Book helloBook() {
-
 		return new Book(1L, "9788324631766", "Thinking	in	Java", "Bruce	Eckel", "Helion", "programming");
 	}
 
-	@GetMapping("/books")
+	@GetMapping("/")
 	public List<Book> getAllBooks() {
 		return memoryBookService.getList();
 	}
 
-	@GetMapping("/books/{id}")
+	@GetMapping("/{id}")
 	public Book getOneBook(long id) {
 		Book selectedBook = memoryBookService.selectBook(id);
 		if (selectedBook != null) {
-
 			return selectedBook;
 		}
 		new ResponseEntity<String>("No id found", HttpStatus.NOT_FOUND);
 		return null;
 	}
 
-	@PostMapping("/books/")
+	@PostMapping("/add")
 	public ResponseEntity<String> addBook(@RequestBody Book book) {
 		if (memoryBookService.addBook(book)) {
 			return new ResponseEntity<String>("K", HttpStatus.CREATED);
@@ -60,13 +58,13 @@ public class BookController {
 		return new ResponseEntity<String>("not K", HttpStatus.CONFLICT);
 	}
 
-	@PutMapping("/books/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<Book> updateBook(@RequestBody Book book) {
 		memoryBookService.updateBook(book);
 		return new ResponseEntity<Book>(book, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/books/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> removeBook(@RequestBody long id) {
 		if (memoryBookService.deleteBook(id)) {
 			return new ResponseEntity<String>("K", HttpStatus.OK);
