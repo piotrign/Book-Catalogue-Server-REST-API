@@ -46,16 +46,16 @@ public class BookController {
 		if (selectedBook != null) {
 			return selectedBook;
 		}
-		new ResponseEntity<String>("No id found", HttpStatus.NOT_FOUND);
+		new ResponseEntity<String>("Book with given ID has been not found", HttpStatus.NOT_FOUND);
 		return null;
 	}
 
 	@PostMapping("/add")
 	public ResponseEntity<String> addBook(@RequestBody Book book) {
 		if (memoryBookService.addBook(book)) {
-			return new ResponseEntity<String>("K", HttpStatus.CREATED);
+			return new ResponseEntity<String>("Book added", HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>("not K", HttpStatus.CONFLICT);
+		return new ResponseEntity<String>("Could not add a new book", HttpStatus.CONFLICT);
 	}
 
 	@PutMapping("/update/{id}")
@@ -67,7 +67,7 @@ public class BookController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> removeBook(@RequestBody long id) {
 		if (memoryBookService.deleteBook(id)) {
-			return new ResponseEntity<String>("K", HttpStatus.OK);
+			return new ResponseEntity<String>("Book has been deleted", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("No id found", HttpStatus.NOT_FOUND);
 	}
