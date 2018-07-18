@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.coderslab.warsztat5.entity.Book;
+import pl.coderslab.warsztat5.responsemsg.ResponseMsg;
 import pl.coderslab.warsztat5.service.BookService;
 
 @EnableAutoConfiguration
@@ -41,34 +42,33 @@ public class BookController {
 	}
 
 	@GetMapping("/{id}")
-	public Book getOneBook(long id) {
+	public ResponseEntity<Book> getOneBook(long id) {
 		Book selectedBook = memoryBookService.selectBook(id);
 		if (selectedBook != null) {
-			return selectedBook;
+			return new ResponseEntity<>(selectedBook, HttpStatus.OK);
 		}
-		new ResponseEntity<String>("Book with given ID has been not found", HttpStatus.NOT_FOUND);
-		return null;
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<String> addBook(@RequestBody Book book) {
+	public ResponseEntity<ResponseMsg> addBook(@RequestBody Book book) {
 		if (memoryBookService.addBook(book)) {
-			return new ResponseEntity<String>("Book added", HttpStatus.CREATED);
+			return new ResponseEntity<>(ResponseMsg.CREATED, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>("Could not add a new book", HttpStatus.CONFLICT);
+		return new ResponseEntity<>(ResponseMsg.BOOKEXISTS, HttpStatus.CONFLICT);
 	}
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Book> updateBook(@RequestBody Book book) {
 		memoryBookService.updateBook(book);
-		return new ResponseEntity<Book>(book, HttpStatus.OK);
+		return new ResponseEntity<>(book, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> removeBook(@RequestBody long id) {
+	public ResponseEntity<ResponseMsg> removeBook(@RequestBody long id) {
 		if (memoryBookService.deleteBook(id)) {
-			return new ResponseEntity<String>("Book has been deleted", HttpStatus.OK);
+			return new ResponseEntity<>(ResponseMsg.BOOKDELETED, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("No id found", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(ResponseMsg.BOOKNOTFOUND, HttpStatus.NOT_FOUND);
 	}
 }
